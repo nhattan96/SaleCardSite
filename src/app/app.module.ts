@@ -12,8 +12,20 @@ import { LoginComponent } from './login/login.component';
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { fakeBackendProvider } from './_helpers/fake-backend';
-import { JwtInterceptor } from './_helpers/jwt.interceptor';
+import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { AdminComponent } from './admin';
+import { SocialLoginModule, AuthServiceConfig, FacebookLoginProvider } from 'angularx-social-login';
+
+const config = new AuthServiceConfig([
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider('274615576768251')
+  }
+]);
+
+export function provideConfig() {
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -28,14 +40,20 @@ import { AdminComponent } from './admin';
     AppRoutingModule,
     NgbModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SocialLoginModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    //{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 
     // provider used to create fake backend
-    fakeBackendProvider
+    fakeBackendProvider,
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
+    }
   ],
   bootstrap: [AppComponent]
 })

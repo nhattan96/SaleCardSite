@@ -7,7 +7,8 @@ import { User, Role } from '../_models';
 
 const users: User[] = [
     { id: 1, username: 'User', password: 'User', firstName: 'User', lastName: 'User', role: Role.User },
-    { id: 2, username: 'Guess', password: 'Guess', firstName: 'Guess', lastName: 'Guess', role: Role.Guess }
+    { id: 2, username: 'Guess', password: 'Guess', firstName: 'Guess', lastName: 'Guess', role: Role.Guess },
+    { id: 3, username: 'tan', password: 'tan', firstName: 'tan', lastName: 'tan', role: Role.User },
 ];
 
 @Injectable()
